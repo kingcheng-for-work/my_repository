@@ -1,0 +1,14 @@
+
+//首页轮播图
+http://m.maizuo.com/v4/api/billboard/home?__t=1498788766515
+
+//热映电影
+http://m.maizuo.com/v4/api/film/now-playing?__t=1498789413428&page=1&count=5
+
+
+//即将上映
+http://m.maizuo.com/v4/api/film/coming-soon?__t=1498789413434&page=1&count=3
+
+
+//电影详情
+http://m.maizuo.com/v4/api/film/{id}
