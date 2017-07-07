@@ -50,7 +50,12 @@ Object.keys(proxyTable).forEach(function (context) {
 
 //设置代理，便于引入卖座网接口
 app.use('/api', proxyMiddleware({
-	target: 'http://m.maizuo.com/v4',
+	target: 'http://m.maizuo.com/v4',	
+	changeOrigin: true
+}));
+
+app.use('/schedule', proxyMiddleware({
+	target: 'http://ticket.maizuo.com/api',
 	changeOrigin: true
 }));
 

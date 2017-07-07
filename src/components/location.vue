@@ -1,39 +1,39 @@
 <template>
 	<transition name="slide">
 		<div class="location">
-			<div class="location_title">
-				<div class="back" @click="backAction()"><</div>
-				<div>城市列表</div>
-				<div></div>
-			</div>
-			<div class="location_content">
-				<div class="box">
-				<ul class="location_nav">
-					<li v-for="(item,index) in arr" @click="liAction(index)">{{item}}</li>
-				</ul>
-				
-				<ul class="city">
-					<li class="title"><span>GDP定位您所在的城市</span></li>
-					<li><span style="border: none;color: #e88b49;">{{location}}</span></li>
-				</ul>			
-				<ul class="city" v-for="item in listData">
-					<li class="title"><span>{{item.title}}</span></li>
-					<li v-for="name in item.cityData" @click="locationAction(name)"><span>{{name}}</span></li>
-				</ul>
-				<div v-for="item in test">
-					libiao
+
+				<div class="location_title">
+					<div class="back" @click="backAction()"><</div>
+					<div>城市列表</div>
 				</div>
+				<div class="location_content" ref="wrapper">
+					
+					<ul class="location_nav">
+						<li v-for="(item,index) in arr" @click="liAction(index)">{{item}}</li>
+					</ul>
+					
+					<ul class="city">
+						<li class="title"><span>GDP定位您所在的城市</span></li>
+						<li><span style="border: none;color: #e88b49;">{{location}}</span></li>
+					</ul>			
+					<ul class="city" v-for="item in listData">
+						<li class="title"><span>{{item.title}}</span></li>
+						<li v-for="name in item.cityData" @click="locationAction(name)"><span>{{name}}</span></li>
+					</ul>
+	
 				</div>
-			</div>
-		
+
 		</div>
+
 	</transition>
 </template>
 
 <script>
 	import Vue from 'vue'
 	import api from '../../common/api.js'
-	import router from '../router/index.js'
+	import router from '../router'
+//	import BScroll from 'better-scroll'
+
 	export default {
 		name:'location',
 		data(){
@@ -80,31 +80,27 @@
 			.catch((error)=>{
 				console.log(error);
 			})
+//			
+//			let scroll = new BScroll(this.$refs.wrapper, {
+//			  	probeType:3,
+//				click:true
+//			})
 		},
 		methods:{
 			liAction(index){
-//				console.log(index)
-//				var cityDoms =  document.getElementsByClassName('city');
-//				var dom = cityDoms[index].getElementsByClassName('title')[0];
-//				console.log(dom)
+				var cityDoms =  document.getElementsByClassName('city');
+				var dom = cityDoms[index].getElementsByClassName('title')[0];
 				var content  = document.getElementsByClassName("location_content")[0];
-				var content1  = document.getElementsByClassName("location")[0];
-				var box  = document.getElementsByClassName("box")[0];
-//				console.log('值：',dom.offsetTop);
-//				console.log(content)
+				var oBox = document.querySelector(".box")
+				var distance = cityDoms[index].offsetTop
+				
+				console.log(oBox.scrollTop)
 
-				console.log(box.scrollTop)
-//				content.scrollTop = 20000;
-//				console.log(content.offsetHeight);
-//				console.log(cityDoms[index].offsetTop);
-				
-//				console.log(content1.offsetHeight);
-//				console.log(content1.scrollTop);  
-				
-//				content.scrollTop = cityDoms[index].offsetTop;//这个地方用JS写动画怎么写
+				console.log(content)
+				console.log(cityDoms[index].offsetTop);
+				console.log(content.scrollTop);
 			},
 			backAction(){
-				console.log(router);
 				router.go(-1);
 			},
 			locationAction(name){
@@ -121,11 +117,15 @@
 <style>
 	.location{
 		font-size: 0.45rem;
+		width: 100%;
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
 	}
 	.location .location_title{
 		height:1.34rem;
-		display: flex;
-		justify-content: space-between;
+		text-align: center;
 		line-height: 1.34rem;
 		width: 100%;
 		position: absolute;
@@ -135,7 +135,8 @@
 	}
 	.location_title .back{
 		color: #56b1ce;
-		margin-left: 0.78rem;
+		position: absolute;
+		left: 0.78rem;
 		font-size: 0.4rem;
 	}
 	.location .location_title:after{
@@ -155,17 +156,11 @@
 		left: 0;
 		top: 1.35rem;
 		bottom: 0;
-		overflow: hidden;
+		overflow: scroll;
 		z-index: 10;
 		background: white;
 	}
-	.location .location_content .box{
-		width: 100%;
-		overflow: scroll;
-		position: absolute;
-		top: 0;
-		left: 0;
-	}
+
 	.location .location_content .location_nav{
 		position: fixed;
 		right: 0;
@@ -208,27 +203,25 @@
 	
 	@keyframes slide-enter{
 		from{
-			transform: translateY(100%);
+			transform: translateX(100%);
 		}
 		to{
-			transform: translateY(0%);
+			transform: translateX(0%);
 		}
 	}
 	@keyframes slide-leave{
 		from{
-			transform: translateY(0%);
+			transform: translateX(0%);
 		}
 		to{
-			transform: translateY(100%);
+			transform: translateX(100%);
 		}
 	}
-	
 	.slide-enter-active{
-		animation: slide-enter 1s ease-in;
+		animation: slide-enter 400ms ease-in;
 	}
-	
-	.slide-leave-active{
-		animation: slide-leave 1s ease-out;
+	.slide-leave-active {
+	  animation: slide-leave 400ms ease-in;
 	}
 	
 </style>

@@ -7,6 +7,9 @@ import Show from '@/components/show/show'
 import Shopmall from '@/components/shopmall/shopmall'
 import Mine from '@/components/mine/mine'
 import Location from '@/components/location'
+import Detail from '@/components/common/detail'
+import Theatre from '@/components/common/theatre'
+import Schedule from '@/components/show/schedule'
 
 Vue.use(Router)
 
@@ -17,7 +20,12 @@ export default new Router({
     
     {path: '/movie', name: 'movie', component: Movie,
     	children:[
-    		{path: 'location', name: 'location', component: Location}
+    		{path: 'location', name: 'location', component: Location},
+    		{path: 'detail/:id', name: 'detail', component: Detail,
+    			children:[
+    				{path: 'theatre', name:'theatre',component: Theatre}
+    			]
+    		}
     	]
     },
     
@@ -25,11 +33,13 @@ export default new Router({
     {path: '/cinema', name: 'cinema', component: Cinema},
     {path: '/cinema/location', name: 'location', component: Location},
     
-    {path: '/show', name: 'show', component: Show},
+    {path: '/show', name: 'show', component: Show,
+    	children:[
+    		{path: 'schedule/:id' , name:'schedule', component:Schedule}
+    	]
+    },
     {path: '/shopmall', name: 'shopmall', component: Shopmall},
-    {path: '/mine', name: 'mine', component: Mine},
+    {path: '/mine', name: 'mine', component: Mine}
     
-//  重定向
-		{path: '/*', name: 'movie', component: Movie}
   ]
 })
